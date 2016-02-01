@@ -1,4 +1,6 @@
-========== TRANSLATE FROM SQL TO ACTIVE RECORD
+===============================
+TRANSLATE FROM SQL TO ACTIVE RECORD
+===============================
 
 ```
 SELECT *
@@ -89,7 +91,9 @@ Post.all.order(created_at: desc:)
 ```
 
 
-============= FROM ACTIVE RECORD TO SQL
+===============================
+FROM ACTIVE RECORD TO SQL
+===============================
 
 Post.all
 ```
