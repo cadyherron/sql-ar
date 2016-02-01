@@ -157,3 +157,33 @@ SELECT * FROM posts WHERE title LIKE 'The%';
 Posts with IDs of 3,5,7, and 9
 
 SELECT * FROM posts WHERE id IN (3,5,7,9);
+
+===============================
+Custom Questions
+===============================
+Select top 5 users who have made the most posts:
+
+SQL:
+SELECT * FROM users JOIN posts ON users.id = posts.user_id
+GROUP BY users.id
+ORDER BY COUNT(posts.id) DESC
+LIMIT 5
+
+ActiveRecord:
+User.all.select('count(post_id)' as post_count).joins('JOIN posts ON user.id = posts.user_id').group(:user_id).order(post_count: :desc).limit(5)
+
+Find all users with 'James' as a last name:
+
+SQL:
+SELECT * FROM users WHERE last_name = 'James'
+
+ActiveRecord:
+User.all.where("last_name = 'James'")
+
+Find all users who have not made a post:
+SQL:
+SELECT * FROM users LEFT JOIN posts ON users.id = posts.user_id
+WHERE posts.user_id IS NULL
+
+ActiveRecord:
+User.all.joins('LEFT JOIN posts ON users.id = posts.user_id').where("posts.user_id IS NULL")
