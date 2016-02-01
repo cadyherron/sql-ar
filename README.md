@@ -82,3 +82,78 @@ User.all
 * all posts sorted in descending order by date created
 
 Post.all.order(created_at: desc:)
+
+
+
+============= FROM ACTIVE RECORD TO SQL
+
+Post.all
+
+SELECT * FROM posts
+
+
+Post.first
+ 
+SELECT * FROM posts ORDER BY id LIMIT 1;
+
+
+Post.last
+
+SELECT * FROM posts ORDER BY id DESC LIMIT 1;
+
+
+Post.where(:id => 4)
+
+SELECT * FROM posts WHERE id = 4;
+
+
+Post.find(4)
+
+SELECT * FROM posts WHERE id = 4;
+
+
+
+User.count
+
+SELECT COUNT(*) FROM users;
+
+
+
+Post.select(:name).where(:created_at > 3.days.ago).order(:created_at)
+
+SELECT name FROM posts WHERE created_at > (NOW() - '3 days')
+  ORDER BY created_at;
+
+
+
+Post.select("COUNT(*)").group(:category_id)
+
+SELECT COUNT(*) as post_count FROM posts
+  GROUP BY category_id; 
+
+
+
+All posts created before 2014
+
+SELECT * FROM posts WHERE created_at <= '2014-01-01';
+
+
+
+A list of all (unique) first names for authors who have written at least 3 posts
+
+SELECT DISTINCT(a.first_name) FROM authors a
+  JOIN posts p ON a.id = p.author_id
+  WHERE COUNT(p.id) >= 3
+  GROUP BY a.id;
+
+
+
+The posts with titles that start with the word "The"
+
+SELECT * FROM posts WHERE title LIKE 'The%';
+
+
+
+Posts with IDs of 3,5,7, and 9
+
+SELECT * FROM posts WHERE id IN (3,5,7,9);
